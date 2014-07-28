@@ -1,0 +1,1 @@
+/home/zwbingo/Code/dwm/config.h
