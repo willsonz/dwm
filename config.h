@@ -35,7 +35,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask		/* set to windows key */
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -47,7 +47,19 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "uxterm", NULL };
+static const char *termcmd[]  = { "xfce4-terminal", NULL };	// 默认终端
+// 音量控制命令
+static const char *volumeup[]       = { "amixer", "-q", "sset", "Master", "5+", NULL };
+static const char *volumedown[]     = { "amixer", "-q", "sset", "Master", "5-", NULL };
+static const char *volumemute[]     = { "amixer", "-q", "sset", "Master", "toggle", NULL };
+static const char *screenshotcmd[]  = { "scrot", NULL };
+//static const char *musicopen[]   = { "mocp", "-p", NULL };
+// 音乐播放命令
+static const char *musicplay[]   = { "mocp", "-G", NULL };
+static const char *musicstop[]   = { "mocp", "-x", NULL };
+static const char *musicnext[]   = { "mocp", "-f", NULL };
+static const char *musicback[]   = { "mocp", "-r", NULL };
+
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -84,6 +96,16 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	/* 自定义快捷键 */
+	{ 0,							0x1008ff13,	spawn,		{.v = volumeup} },		// 加大音量
+	{ 0,							0x1008ff11,	spawn,		{.v = volumedown} },	// 减小音量
+	{ 0,							0x1008ff12,	spawn,		{.v = volumemute} },	// 静音/启音
+	{ 0,                            XK_Print,  spawn,         {.v = screenshotcmd } },	// 截图键
+//	{ MODKEY,						XK_s,		spawn,			{.v = musicopen } },	
+	{ 0,							0x1008ff14, spawn,		{.v = musicplay } },
+	{ 0,							0x1008ff15,	spawn,		{.v = musicstop } },
+	{ 0,							0x1008ff16,	spawn,		{.v = musicback } },
+	{ 0,							0x1008ff17,	spawn,		{.v = musicnext } },
 };
 
 /* button definitions */
